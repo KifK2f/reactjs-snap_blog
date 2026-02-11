@@ -3,6 +3,7 @@ import './App.css'
 import Welcome from './components/Welcome'
 import Car from './components/Car'
 import Login from './components/Login'
+import Photos from './components/Photos'
 
 import { BrowserRouter as MonRouter, Route, Link, Routes } from "react-router-dom"
 
@@ -26,6 +27,7 @@ function App() {
               <li> <Link to="/">Accueil</Link> </li>
               <li> <Link to="/login">Login</Link> </li>
               <li> <Link to="/car">Car</Link> </li>
+              <li> <Link to="/photos">Photos</Link> </li>
             </ul>
           </nav>
           
@@ -33,6 +35,7 @@ function App() {
             <Route path="/" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/car" element={<Car />} />
+            <Route path="/photos" element={<Photos />} />
           </Routes>
 
         </div>
