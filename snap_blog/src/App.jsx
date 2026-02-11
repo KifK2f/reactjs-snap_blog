@@ -9,7 +9,9 @@ function App() {
     <>
       {/* <Welcome />
       <hr /> */}
-      <Car/>
+      <Car brand="Toyota" year="2020"/>
+      <Car brand="BMW" year="1984"/>
+      <Car brand="Jaguar" year="1992"/>
     </>
   )
 }
