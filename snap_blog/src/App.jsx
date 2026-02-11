@@ -4,6 +4,11 @@ import Welcome from './components/Welcome'
 import Car from './components/Car'
 import Login from './components/Login'
 
+import { BrowserRouter as MonRouter, Route, Link, Routes } from "react-router-dom"
+
+
+//Link permet de changeer d'URL sans recharger la page
+
 function App() {
 
   return (
@@ -13,7 +18,26 @@ function App() {
       {/* <Car brand="Toyota" year="2020"/>
       <Car brand="BMW" year="1984"/>
       <Car brand="Jaguar" year="1992"/> */}
-      <Login />
+      
+      <MonRouter>
+        <div>
+          <nav>
+            <ul>
+              <li> <Link to="/">Accueil</Link> </li>
+              <li> <Link to="/login">Login</Link> </li>
+              <li> <Link to="/car">Car</Link> </li>
+            </ul>
+          </nav>
+          
+          <Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/car" element={<Car />} />
+          </Routes>
+
+        </div>
+      </MonRouter>
+
 
     </>
   )
