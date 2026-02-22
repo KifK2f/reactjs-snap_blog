@@ -1,7 +1,7 @@
 /* Solution pour le problème de positionnement du navbar */
 /* Le navbar utilise 'fixed-top' ce qui le rend fixe au sommet de la page */
 /* Pour que le contenu ne passe pas sous le navbar, on ajoute du padding-top */
-/* La valeur de 70px correspond à la hauteur approximative du navbar Bootstrap */
+/* La valeur de 60px correspond à la hauteur approximative du navbar Bootstrap */
 .content-wrapper {
-  padding-top: 70px;
+  padding-top: 60px;
 }

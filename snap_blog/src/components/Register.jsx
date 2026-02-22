@@ -2,17 +2,23 @@ import React from 'react'
 import Navbar from './Navbar'
 import "../assets/css/auth.css"
 
-class Login extends React.Component {
+class Register extends React.Component {
 
     constructor(){
         super()
         this.state = {
+            name: "",
             email: "",
             password: "",
+            confirmPassword: ""
         }
     }
 
     // Handlers pour mettre à jour l'état en fonction des entrées utilisateur
+    handleNameChange = event => {
+        this.setState({ name: event.target.value })
+    }
+
     handleEmailChange = event => {
         this.setState({ email: event.target.value })
     }
@@ -21,8 +27,12 @@ class Login extends React.Component {
         this.setState({ password: event.target.value })
     }
 
+    handleConfirmPasswordChange = event => {
+        this.setState({ confirmPassword: event.target.value })
+    }
+
     handleSubmit = event => {
-        event.preventDefault() // Empêche le comportement par défaut du formulaire (rechargement de la page)
+        event.preventDefault()
     }
 
 
@@ -37,13 +47,21 @@ class Login extends React.Component {
             {/* Texte à gauche */}
             <div className="mb-4 text-center text-lg-start">
             <h1 className="display-3 mb-2 fw-bold my_text_color">Snap Blog</h1>
-            <p className="fs-4 mb-0">Connectez-vous pour continuer</p>
+            <p className="fs-4 mb-0">Créez un compte pour commencer</p>
+            {/* <p className="fs-4 mb-0">Veuillez vous connecter à votre compte Snap Blog</p> */}
             {/* <p className="fs-4">Merci pour voter compréhension</p> */}
             </div>
 
             {/* Formulaire à droite */}
             <form  method='POST' onSubmit={this.handleSubmit} className="card p-4 shadow w-100 my_background_color" style={{ maxWidth: "400px" }}>
-            
+            <label htmlFor="">Nom</label>
+            <input
+                type="text"
+                className="form-control mb-3"
+                placeholder="Entrez votre nom"
+                required
+                onChange={this.handleNameChange}
+            />
             <label htmlFor="">Email</label>
             <input
                 type="email"
@@ -60,18 +78,25 @@ class Login extends React.Component {
                 required
                 onChange={this.handlePasswordChange}
             />
+            <label htmlFor="">Confirmation du mot de passe</label>
+            <input
+                type="password"
+                className="form-control mb-3"
+                placeholder="Confirmez votre mot de passe"
+                required
+                onChange={this.handleConfirmPasswordChange}
+            />
 
             <div className="d-flex flex-column text-center gap-2 mb-3">
                 <button type="submit" className="btn btn-primary fw-bold">
-                Me connecter
+                M'inscrire
                 </button>
-                <a href="#" className="text-light small">Mot de passe oublié ?</a>
             </div>
 
 
             <div className="text-center mt-3">
                 <a href="#" className="btn btn-success fw-bold">
-                Créer un compte
+                Se connecter
                 </a>
             </div>
             </form>
@@ -83,4 +108,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login
+export default Register
