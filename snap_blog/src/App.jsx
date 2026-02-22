@@ -10,10 +10,11 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
 
 
-import Navbar from './components/navbar'
-
+import Navbar from './components/Navbar'
 import { BrowserRouter as MonRouter, Route, Link, Routes } from "react-router-dom"
 import Home from './components/Home'
+import AppRouter from './components/AppRouter'
+
 
 
 //Link permet de changeer d'URL sans recharger la page
@@ -22,11 +23,15 @@ function App() {
 
   return (
     <>
-      
-      {/* <button className="btn btn-warning p-3 m-5">I'm done!</button> */}
 
-      <Navbar />
-      <Home />
+      <MonRouter>
+          <Navbar />
+          {/* Wrapper avec padding-top pour compenser la hauteur du navbar fixe */}
+          {/* Cela garantit que le contenu s'affiche correctement en dessous du navbar */}
+          <div className="content-wrapper">
+            <AppRouter />
+          </div>
+      </MonRouter>
 
       {/* <Welcome />
       <hr /> */}
