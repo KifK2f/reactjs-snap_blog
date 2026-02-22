@@ -1,11 +1,19 @@
 import { useState } from 'react'
 import './App.css'
 import Welcome from './components/Welcome'
-import Car from './components/Car'
-import Login from './components/Login'
-import Photos from './components/Photos'
+// import Car from './components/Car'
+// import Login from './components/Login'
+// import Photos from './components/Photos'
+
+//Les imports pour Bootstrap
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+
+
+import Navbar from './components/navbar'
 
 import { BrowserRouter as MonRouter, Route, Link, Routes } from "react-router-dom"
+import Home from './components/Home'
 
 
 //Link permet de changeer d'URL sans recharger la page
@@ -14,13 +22,19 @@ function App() {
 
   return (
     <>
+      
+      {/* <button className="btn btn-warning p-3 m-5">I'm done!</button> */}
+
+      <Navbar />
+      <Home />
+
       {/* <Welcome />
       <hr /> */}
       {/* <Car brand="Toyota" year="2020"/>
       <Car brand="BMW" year="1984"/>
       <Car brand="Jaguar" year="1992"/> */}
       
-      <MonRouter>
+      {/* <MonRouter>
         <div>
           <nav>
             <ul>
@@ -39,7 +53,7 @@ function App() {
           </Routes>
 
         </div>
-      </MonRouter>
+      </MonRouter> */}
 
 
     </>
