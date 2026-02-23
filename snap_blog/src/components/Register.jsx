@@ -1,6 +1,8 @@
 import React from 'react'
 import Navbar from './Navbar'
 import "../assets/css/auth.css"
+import axios from 'axios'
+import { Navigate } from 'react-router-dom'
 
 class Register extends React.Component {
 
@@ -10,7 +12,8 @@ class Register extends React.Component {
             name: "",
             email: "",
             password: "",
-            confirmPassword: ""
+            confirm_password: "",
+            redirect: false
         }
     }
 
@@ -28,16 +31,39 @@ class Register extends React.Component {
     }
 
     handleConfirmPasswordChange = event => {
-        this.setState({ confirmPassword: event.target.value })
+        this.setState({ confirm_password: event.target.value })
     }
 
     handleSubmit = event => {
         event.preventDefault()
+
+        let bodyFormData = new FormData()
+        bodyFormData.append("name", this.state.name)
+        bodyFormData.append("email", this.state.email)
+        bodyFormData.append("password", this.state.password)
+        bodyFormData.append("confirm_password", this.state.confirm_password)
+
+        axios.post("http://127.0.0.1:8000/api/register", bodyFormData)
+            .then(res => {
+                console.log(res.data)
+                // stocker le token dans le localStorage
+                localStorage.setItem("token", res.data.api_token)
+                // redirection une fois l'inscription réussie
+                this.setState({ redirect: true })
+            })
+            .catch(error => {
+                console.log(error.response)
+            })
+
     }
 
 
 
   render() {
+    if (this.state.redirect) {
+        return <Navigate to="/" />
+    }
+
     return (
         <>
         <Navbar />
