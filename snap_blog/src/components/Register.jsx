@@ -13,7 +13,8 @@ class Register extends React.Component {
             email: "",
             password: "",
             confirm_password: "",
-            redirect: false
+            redirect: false,
+            errors: []
         }
     }
 
@@ -52,6 +53,11 @@ class Register extends React.Component {
                 this.setState({ redirect: true })
             })
             .catch(error => {
+                 if (error.response.status === 401) {
+                    this.setState({ errors: error.response.data.errors }, () => {
+                        console.log(this.state)
+                    })
+                }
                 console.log(error.response)
             })
 
@@ -83,35 +89,45 @@ class Register extends React.Component {
             <label htmlFor="">Nom</label>
             <input
                 type="text"
-                className="form-control mb-3"
+                className={`form-control mb-3 ${this.state.errors && this.state.errors.name ? 'is-invalid' : ''}`}
                 placeholder="Entrez votre nom"
                 required
                 onChange={this.handleNameChange}
             />
+            {this.state.errors && this.state.errors.name ? <div className="text-white bg-danger p-2 rounded mt-1">{this.state.errors['name']}</div> : ''}
+
+
             <label htmlFor="">Email</label>
             <input
                 type="email"
-                className="form-control mb-3"
+                className={`form-control mb-3 ${this.state.errors && this.state.errors.email ? 'is-invalid' : ''}`}
                 placeholder="Entrez votre email"
                 required
                 onChange={this.handleEmailChange}
             />
+            {this.state.errors && this.state.errors.email ? <div className="text-white bg-danger p-2 rounded mt-1">{this.state.errors['email']}</div> : ''}
+
+
             <label htmlFor="">Mot de passe</label>
             <input
                 type="password"
-                className="form-control mb-3"
+                className={`form-control mb-3 ${this.state.errors && this.state.errors.password ? 'is-invalid' : ''}`}
                 placeholder="Entrez votre mot de passe"
                 required
                 onChange={this.handlePasswordChange}
             />
+            {this.state.errors && this.state.errors.password ? <div className="text-white bg-danger p-2 rounded mt-1">{this.state.errors['password']}</div> : ''}
+
+
             <label htmlFor="">Confirmation du mot de passe</label>
             <input
                 type="password"
-                className="form-control mb-3"
+                        className={`form-control mb-3 ${this.state.errors && this.state.errors.confirm_password ? 'is-invalid' : ''}`}
                 placeholder="Confirmez votre mot de passe"
                 required
                 onChange={this.handleConfirmPasswordChange}
             />
+            {this.state.errors && this.state.errors.confirm_password ? <div className="text-white bg-danger p-2 rounded mt-1 mb-2 fw-bold">{this.state.errors['confirm_password']}</div> : ''}
 
             <div className="d-flex flex-column text-center gap-2 mb-3">
                 <button type="submit" className="btn btn-primary fw-bold">
@@ -121,7 +137,7 @@ class Register extends React.Component {
 
 
             <div className="text-center mt-3">
-                <a href="#" className="btn btn-success fw-bold">
+                <a href="/login" className="btn btn-success fw-bold">
                 Se connecter
                 </a>
             </div>

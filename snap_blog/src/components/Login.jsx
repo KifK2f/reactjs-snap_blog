@@ -11,7 +11,8 @@ class Login extends React.Component {
         this.state = {
             email: "",
             password: "",
-            redirect: false
+            redirect: false,
+            errors: []
         }
     }
 
@@ -41,6 +42,11 @@ let bodyFormData = new FormData()
                 this.setState({ redirect: true })
             })
             .catch(error => {
+                if (error.response.status === 401) {
+                    this.setState({ errors: error.response.data.errors }, () => {
+                        console.log(this.state)
+                    })
+                }
                 console.log(error.response)
             })
     }
@@ -71,19 +77,24 @@ let bodyFormData = new FormData()
             <label htmlFor="">Email</label>
             <input
                 type="email"
-                className="form-control mb-3"
+                className={`form-control mb-3 ${this.state.errors && this.state.errors.email ? 'is-invalid' : ''}`}
                 placeholder="Entrez votre email"
                 required
                 onChange={this.handleEmailChange}
             />
+            {this.state.errors && this.state.errors.email ? <div className="text-white bg-danger p-2 rounded mt-1">{this.state.errors['email']}</div> : ''}
+
             <label htmlFor="">Mot de passe</label>
             <input
                 type="password"
-                className="form-control mb-3"
+                className={`form-control mb-3 ${this.state.errors && this.state.errors.password ? 'is-invalid' : ''}`}
                 placeholder="Entrez votre mot de passe"
                 required
                 onChange={this.handlePasswordChange}
             />
+            {this.state.errors && this.state.errors.password ? <div className="text-white bg-danger p-2 rounded mt-1 mb-1">{this.state.errors['password']}</div> : ''} 
+
+            {this.state.errors && this.state.errors == 'bad_credentials' ? <div className="alert alert-warning">Email ou mot de passe incorrect</div> : ''}
 
             <div className="d-flex flex-column text-center gap-2 mb-3">
                 <button type="submit" className="btn btn-primary fw-bold">
@@ -94,7 +105,7 @@ let bodyFormData = new FormData()
 
 
             <div className="text-center mt-3">
-                <a href="#" className="btn btn-success fw-bold">
+                <a href="/register" className="btn btn-success fw-bold">
                 Créer un compte
                 </a>
             </div>
