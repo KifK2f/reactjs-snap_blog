@@ -1,6 +1,8 @@
 import React from 'react'
 import Navbar from './Navbar'
 import "../assets/css/auth.css"
+import axios from 'axios'
+import { Navigate } from 'react-router-dom'
 
 class Login extends React.Component {
 
@@ -9,6 +11,7 @@ class Login extends React.Component {
         this.state = {
             email: "",
             password: "",
+            redirect: false
         }
     }
 
@@ -23,11 +26,32 @@ class Login extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault() // Empêche le comportement par défaut du formulaire (rechargement de la page)
+
+        // Ici, vous pouvez ajouter la logique pour envoyer les données de connexion à votre backend
+let bodyFormData = new FormData()
+        bodyFormData.append("email", this.state.email)
+        bodyFormData.append("password", this.state.password)
+
+        axios.post("http://127.0.0.1:8000/api/login", bodyFormData)
+            .then(res => {
+                console.log(res.data)
+                // stocker le token dans le localStorage
+                localStorage.setItem("token", res.data.api_token)
+                // redirection une fois l'inscription réussie
+                this.setState({ redirect: true })
+            })
+            .catch(error => {
+                console.log(error.response)
+            })
     }
 
 
 
   render() {
+     if (this.state.redirect) {
+        return <Navigate to="/" />
+    }
+
     return (
         <>
         <Navbar />
