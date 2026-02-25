@@ -42,8 +42,15 @@ class PostPicture extends React.Component {
         bodyFormData.append("description", this.state.description)
         bodyFormData.append("image", this.state.image)
 
+        // Pour authentifier la requete, on doit envoyer le token de connexion dans les headers de la requete
+        let headers = {
+            headers :  {
+                'API-TOKEN': localStorage.getItem("token")
+             
+            }
+        }
 
-        axios.post("http://127.0.0.1:8000/api/pictures", bodyFormData)
+        axios.post("http://127.0.0.1:8000/api/pictures", bodyFormData, headers)
             .then(res => {
                this.setState({ redirect: true })
             })
