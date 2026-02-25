@@ -1,4 +1,7 @@
 import React from 'react'
+import axios from 'axios'
+import { Navigate } from 'react-router-dom'
+
 class PostPicture extends React.Component {
 
   constructor(){
@@ -7,6 +10,7 @@ class PostPicture extends React.Component {
         title: '',
         description: '',
         image: '',
+        redirect: false,
         errors: []
     }
   }
@@ -30,7 +34,33 @@ class PostPicture extends React.Component {
         })
     } // [0] pour récupérer le premier fichier sélectionné
 
+    handleSubmit = event =>{
+        event.preventDefault()
+
+        let bodyFormData = new FormData()
+        bodyFormData.append("title", this.state.title)
+        bodyFormData.append("description", this.state.description)
+        bodyFormData.append("image", this.state.image)
+
+
+        axios.post("http://127.0.0.1:8000/api/pictures", bodyFormData)
+            .then(res => {
+               this.setState({ redirect: true })
+            })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    this.setState({ errors: error.response.data.errors }, () => {
+                        console.log(this.state)
+                    })
+                }
+                console.log(error.response)
+            })
+    }
+
     render() {
+          if (this.state.redirect) {
+        return <Navigate to="/" />
+    }
         return(
             <>
                 <div className="d-flex align-items-center justify-content-center vh-100 bg-white p-3">
@@ -55,7 +85,9 @@ class PostPicture extends React.Component {
                     { this.state.errors && this.state.errors.description ? <div className="text-white bg-danger p-2 rounded mt-1">{this.state.errors['description']}</div> : ''}
 
                     <label htmlFor="">Image</label>
-                    <input className="form-control mb-3" type="file" id="formFile" onChange={this.handleImageChange}/>
+                    <input className={`form-control mb-3 ${this.state.errors && this.state.errors.image ? 'is-invalid' : ''}`} type="file" id="formFile" onChange={this.handleImageChange}/>
+                    { this.state.errors && this.state.errors.image ? <div className=" mb-3 text-white bg-danger p-2 rounded mt-1">{this.state.errors['image']}</div> : ''}
+
 
                     <div className="d-flex flex-column text-center gap-2 mb-3">
                         <button type="submit" className="btn btn-primary fw-bold">
