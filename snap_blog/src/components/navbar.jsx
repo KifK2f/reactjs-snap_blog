@@ -16,10 +16,13 @@ class Navbar extends React.Component {
     localStorage.setItem("token", "")
     localStorage.clear()
     this.setState({ token: null }) //Pour qu'il yai un changement d'état et que le composant se re-render et affiche les liens de connexion et d'inscription
-
   }
 
   render() {
+    if (this.state.redirect) {
+        return <Navigate to="/" />
+    }
+
     return (
       <>
         <nav className="navbar navbar-expand-lg fixed-top shadow-sm navbar-custom">
@@ -56,7 +59,7 @@ class Navbar extends React.Component {
                       ?
                       <>
                         <li className="nav-item">
-                        <Link className="nav-link navbar-link-custom" to="/picture/new">Poster une photo</Link>
+                        <Link className="nav-link navbar-link-custom" to="/pictures/new">Poster une photo</Link>
                         </li>
                         <li className="nav-item">
                         <button className="btn btn-danger" onClick={() => this.logout()}>Déconnexion</button>

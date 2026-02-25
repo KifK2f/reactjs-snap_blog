@@ -1,0 +1,27 @@
+/* CARD STYLE */
+.card {
+  width: 18rem;
+  border-radius: 20px;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.shadow-custom {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.shadow-custom:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* IMAGE PLACEHOLDER */
+.image-placeholder {
+  height: 200px;
+  background-color: #dee2e6;
+}
+
+.card:hover .icon-wrapper {
+  transform: rotate(-180deg);
+}
