@@ -18,6 +18,13 @@ class Register extends React.Component {
         }
     }
 
+        componentWillMount(){
+        // redirection si l'utilisateur est déjà connecté
+        if(localStorage.getItem("token")){
+            this.setState({ redirect: true })
+            }
+        }
+
     // Handlers pour mettre à jour l'état en fonction des entrées utilisateur
     handleNameChange = event => {
         this.setState({ name: event.target.value })

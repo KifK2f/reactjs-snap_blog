@@ -6,7 +6,17 @@ class Navbar extends React.Component {
 
   constructor(){
     super()
-    this.state = {}
+    this.state = {
+      token: null
+    }
+  }
+
+  logout = () => {
+    // supprimer le token du localStorage
+    localStorage.setItem("token", "")
+    localStorage.clear()
+    this.setState({ token: null }) //Pour qu'il yai un changement d'état et que le composant se re-render et affiche les liens de connexion et d'inscription
+
   }
 
   render() {
@@ -39,12 +49,32 @@ class Navbar extends React.Component {
                 {/* NB :  On ne peut pas utiliser <Link></Link> sans faire le routage d'où l'errur */}
                 <div className="collapse navbar-collapse" id="navbarExample01">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
-                    <Link className="nav-link navbar-link-custom" to="/login">Connexion</Link>
-                    </li>
-                    <li className="nav-item">
-                    <Link className="nav-link navbar-link-custom" to="/register">Inscription</Link>
-                    </li>
+
+                    {/* Une condition ternaire poour aficher le bouton Déconnexion que si on a le token de connexion */}
+                    {
+                      localStorage.getItem('token')
+                      ?
+                      <>
+                        <li className="nav-item">
+                        <Link className="nav-link navbar-link-custom" to="/picture/new">Poster une photo</Link>
+                        </li>
+                        <li className="nav-item">
+                        <button className="btn btn-danger" onClick={() => this.logout()}>Déconnexion</button>
+                        </li>
+                      </>
+                      :
+                      <>
+                        <li className="nav-item">
+                        <Link className="nav-link navbar-link-custom" to="/login">Connexion</Link>
+                        </li>
+                        <li className="nav-item">
+                        <Link className="nav-link navbar-link-custom" to="/register">Inscription</Link>
+                        </li>
+                      </>
+
+                    }
+
+                    
                     {/* <li className="nav-item">
                     <a className="nav-link navbar-link-custom" href="#">about us</a>
                     </li>
